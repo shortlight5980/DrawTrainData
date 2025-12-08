@@ -6,9 +6,7 @@ const appState = {
     imageGallery: [],
     cellSize: 0,
     brushSize: 1, // 画笔粗细
-    speedAdjust: false, // 是否跟随速度调整画笔粗细
-    lastMousePos: null, // 上一次鼠标位置
-    lastMouseTime: 0 // 上一次鼠标移动时间
+    lastMousePos: null // 上一次鼠标位置
 };
 
 // 本地存储键名
@@ -81,7 +79,6 @@ function bindEventListeners() {
     
     // 画笔设置事件
     document.getElementById('brushSize').addEventListener('input', handleBrushSizeChange);
-    document.getElementById('speedAdjust').addEventListener('change', handleSpeedAdjustChange);
     
     // 导出格式切换事件
     const exportFormats = document.querySelectorAll('input[name="exportFormat"]');
@@ -153,10 +150,7 @@ function handleBrushSizeChange() {
     document.getElementById('brushSizeValue').textContent = appState.brushSize;
 }
 
-// 速度调整事件处理
-function handleSpeedAdjustChange() {
-    appState.speedAdjust = document.getElementById('speedAdjust').checked;
-}
+
 
 // 导出格式切换事件处理
 function handleExportFormatChange() {
@@ -165,81 +159,7 @@ function handleExportFormatChange() {
     txtExportOptions.style.display = selectedFormat === 'txt' ? 'block' : 'none';
 }
 
-// 计算绘画速度并返回当前画笔大小
-function calculateBrushSize(currentMousePos) {
-    if (!appState.speedAdjust || !appState.lastMousePos) {
-        return appState.brushSize;
-    }
-    
-    const now = Date.now();
-    const timeDiff = now - appState.lastMouseTime;
-    if (timeDiff === 0) return appState.brushSize;
-    
-    const distance = Math.sqrt(
-        Math.pow(currentMousePos.x - appState.lastMousePos.x, 2) +
-        Math.pow(currentMousePos.y - appState.lastMousePos.y, 2)
-    );
-    
-    // 计算速度 (像素/毫秒)
-    const speed = distance / timeDiff;
-    
-    // 根据速度调整画笔大小
-    // 速度越快，画笔越小；速度越慢，画笔越大
-    // 扩大速度调整范围，使画笔大小在更宽的速度范围内变化
-    const minSize = 1;
-    const maxSize = Math.max(10, appState.brushSize * 2);
-    
-    // 计算速度的有效范围
-    const minSpeed = 0.5; // 最小有效速度
-    const maxSpeed = 20.0; // 最大有效速度
-    
-    // 将速度限制在有效范围内
-    const clampedSpeed = Math.max(minSpeed, Math.min(maxSpeed, speed));
-    
-    // 根据线性映射调整画笔大小：速度从minSpeed到maxSpeed，大小从maxSize到minSize
-    let adjustedSize = maxSize - ((clampedSpeed - minSpeed) / (maxSpeed - minSpeed)) * (maxSize - minSize);
-    adjustedSize = Math.max(minSize, Math.min(maxSize, adjustedSize));
-    
-    return Math.round(adjustedSize);
-}
 
-// 为指定点计算画笔大小（用于连线中的中间点）
-function calculateBrushSizeForPoint(pointData) {
-    if (!appState.speedAdjust) {
-        return appState.brushSize;
-    }
-    
-    const { x, y, lastX, lastY, lastTime, currentTime } = pointData;
-    const timeDiff = currentTime - lastTime;
-    if (timeDiff === 0) return appState.brushSize;
-    
-    const distance = Math.sqrt(
-        Math.pow(x - lastX, 2) +
-        Math.pow(y - lastY, 2)
-    );
-    
-    // 计算速度 (像素/毫秒)
-    const speed = distance / timeDiff;
-    
-    // 根据速度调整画笔大小
-    // 速度越快，画笔越小；速度越慢，画笔越大
-    // 扩大速度调整范围，使画笔大小在更宽的速度范围内变化
-    const minSize = 1;
-    const maxSize = Math.max(10, appState.brushSize * 2);
-    
-    // 计算速度的有效范围
-    const minSpeed = 0.5; // 最小有效速度
-    const maxSpeed = 20.0; // 最大有效速度
-    
-    // 将速度限制在有效范围内
-    const clampedSpeed = Math.max(minSpeed, Math.min(maxSpeed, speed));
-    
-    // 根据线性映射调整画笔大小：速度从minSpeed到maxSpeed，大小从maxSize到minSize
-    let adjustedSize = maxSize - ((clampedSpeed - minSpeed) / (maxSpeed - minSpeed)) * (maxSize - minSize);
-    adjustedSize = Math.max(minSize, Math.min(maxSize, adjustedSize));
-    
-    return Math.round(adjustedSize);
-}
 
 // Canvas事件处理
 function handleMouseDown(e) {
@@ -278,58 +198,73 @@ function drawCell(e) {
         drawLine(appState.lastMousePos, currentMousePos);
     } else {
         // 否则只绘制当前位置
-        const currentBrushSize = calculateBrushSize(currentMousePos);
-        drawCircle(currentMousePos, currentBrushSize);
+        drawCircle(currentMousePos, appState.brushSize);
     }
     
-    // 更新上一次鼠标位置和时间
+    // 更新上一次鼠标位置
     appState.lastMousePos = currentMousePos;
-    appState.lastMouseTime = Date.now();
 }
 
-// 绘制两个点之间的连线
+// // 绘制两个点之间的连线
+// function drawLine(startPos, endPos) {
+//     // 计算两点之间的距离
+//     const dx = endPos.x - startPos.x;
+//     const dy = endPos.y - startPos.y;
+//     const distance = Math.sqrt(dx * dx + dy * dy);
+    
+//     // 计算两点之间的时间差
+//     const now = Date.now();
+//     const timeDiff = now - appState.lastMouseTime;
+    
+//     // 计算步长（确保绘制流畅）
+//     const step = Math.max(1, Math.floor(appState.brushSize / 2));
+    
+//     // 计算总步数
+//     const steps = Math.ceil(distance / step);
+    
+//     // 绘制每一步的点
+//     for (let i = 0; i <= steps; i++) {
+//         // 计算当前步的位置
+//         const t = i / steps;
+//         const x = startPos.x + dx * t;
+//         const y = startPos.y + dy * t;
+        
+//         // 计算当前点的速度
+//         const pointDistance = distance * t;
+//         const pointTimeDiff = timeDiff * t;
+        
+//         // 创建一个包含该点位置和时间戳的对象，用于计算画笔大小
+//         const pointData = {
+//             x: x,
+//             y: y,
+//             lastX: startPos.x,
+//             lastY: startPos.y,
+//             lastTime: appState.lastMouseTime,
+//             currentTime: appState.lastMouseTime + pointTimeDiff
+//         };
+        
+//         // 计算该点的画笔大小
+//         const pointBrushSize = calculateBrushSizeForPoint(pointData);
+        
+//         // 绘制该点
+//         drawCircle({ x, y }, pointBrushSize);
+//     }
+// }
+
 function drawLine(startPos, endPos) {
-    // 计算两点之间的距离
     const dx = endPos.x - startPos.x;
     const dy = endPos.y - startPos.y;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    
-    // 计算两点之间的时间差
-    const now = Date.now();
-    const timeDiff = now - appState.lastMouseTime;
-    
-    // 计算步长（确保绘制流畅）
+    const distance = Math.hypot(dx, dy);
+
     const step = Math.max(1, Math.floor(appState.brushSize / 2));
-    
-    // 计算总步数
     const steps = Math.ceil(distance / step);
-    
-    // 绘制每一步的点
+
     for (let i = 0; i <= steps; i++) {
-        // 计算当前步的位置
         const t = i / steps;
         const x = startPos.x + dx * t;
         const y = startPos.y + dy * t;
-        
-        // 计算当前点的速度
-        const pointDistance = distance * t;
-        const pointTimeDiff = timeDiff * t;
-        
-        // 创建一个包含该点位置和时间戳的对象，用于计算画笔大小
-        const pointData = {
-            x: x,
-            y: y,
-            lastX: startPos.x,
-            lastY: startPos.y,
-            lastTime: appState.lastMouseTime,
-            currentTime: appState.lastMouseTime + pointTimeDiff
-        };
-        
-        // 计算该点的画笔大小
-        const pointBrushSize = calculateBrushSizeForPoint(pointData);
-        
-        // 绘制该点
-        drawCircle({ x, y }, pointBrushSize);
+
+        drawCircle({ x, y }, appState.brushSize);
     }
 }
 
