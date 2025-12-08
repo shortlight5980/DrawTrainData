@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTD - DrawTrainData</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>DTD - DrawTrainData</h1>
+        </header>
+        
+        <main>
+            <!-- 尺寸选择区 -->
+            <section class="size-selection">
+                <label for="sizeSelect">选择尺寸：</label>
+                <select id="sizeSelect">
+                    <option value="16x16">16×16</option>
+                    <option value="32x32" selected>32×32</option>
+                    <option value="64x64">64×64</option>
+                    <option value="128x128">128×128</option>
+                    <option value="custom">自定义</option>
+                </select>
+                
+                <div id="customSize" style="display: none;">
+                    <label for="widthInput">宽度：</label>
+                    <input type="number" id="widthInput" min="1" value="16">
+                    <label for="heightInput">高度：</label>
+                    <input type="number" id="heightInput" min="1" value="16">
+                    <button id="applySizeBtn">应用</button>
+                </div>
+            </section>
+            
+            <!-- 画板区 -->
+            <section class="canvas-area">
+                <canvas id="drawingCanvas"></canvas>
+            </section>
+            
+            <!-- 操作控制区 -->
+            <section class="controls">
+                <button id="saveBtn">保存到图片夹</button>
+                <button id="resetBtn">重置画板</button>
+                <button id="clearGalleryBtn">重置图片夹</button>
+            </section>
+            
+            <!-- 画笔设置区 -->
+            <section class="brush-settings">
+                <h3>画笔设置</h3>
+                <div class="brush-thickness">
+                    <label for="brushSize">画笔粗细：</label>
+                    <input type="range" id="brushSize" min="1" max="10" value="1">
+                    <span id="brushSizeValue">1</span>
+                </div>
+                <div class="brush-speed">
+                    <label>
+                        <input type="checkbox" id="speedAdjust"> 画笔粗细跟随绘画速度调整
+                    </label>
+                </div>
+            </section>
+            
+            <!-- 图片夹区 -->
+            <section class="image-gallery">
+                <h3>图片夹 <span id="imageCount">0</span> 张</h3>
+                <div id="galleryContainer"></div>
+            </section>
+            
+            <!-- 导出区 -->
+            <section class="export-section">
+                <h3>导出数据集</h3>
+                <div class="export-options">
+                    <label>
+                        <input type="radio" name="exportFormat" value="bmp" checked> BMP格式
+                    </label>
+                    <label>
+                        <input type="radio" name="exportFormat" value="txt"> TXT格式
+                    </label>
+                </div>
+                <div class="txt-export-options" id="txtExportOptions" style="display: none;">
+                    <label>
+                        <input type="radio" name="txtExportType" value="multiple" checked> 保存为多个TXT文件（每张图片一个文件）
+                    </label>
+                    <label>
+                        <input type="radio" name="txtExportType" value="single"> 保存为一个TXT文件（三维数组）
+                    </label>
+                </div>
+                <button id="exportBtn">导出数据集</button>
+            </section>
+        </main>
+    </div>
+    
+    <!-- 引入第三方库 -->
+    <script src="lib/jszip.min.js"></script>
+    <script src="lib/FileSaver.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

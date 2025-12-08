@@ -1,0 +1,237 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 尺寸选择区样式 */
+.size-selection {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.size-selection label {
+    font-weight: bold;
+}
+
+.size-selection select, .size-selection input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#applySizeBtn {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#applySizeBtn:hover {
+    background-color: #45a049;
+}
+
+/* 画板区样式 */
+.canvas-area {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#drawingCanvas {
+    border: 1px solid #ddd;
+    background-color: white;
+    cursor: crosshair;
+}
+
+/* 操作控制区样式 */
+.controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.controls button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#saveBtn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#resetBtn {
+    background-color: #f44336;
+    color: white;
+}
+
+#clearGalleryBtn {
+    background-color: #2196F3;
+    color: white;
+}
+
+.controls button:hover {
+    opacity: 0.9;
+}
+
+/* 图片夹区样式 */
+.image-gallery {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.image-gallery h3 {
+    margin-bottom: 15px;
+}
+
+#galleryContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.gallery-item {
+    width: 80px;
+    height: 80px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+.gallery-item canvas {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 导出区样式 */
+.export-section {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.export-section h3 {
+    margin-bottom: 15px;
+}
+
+.export-options {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+#exportBtn {
+    padding: 10px 20px;
+    background-color: #9C27B0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#exportBtn:hover {
+    background-color: #7B1FA2;
+}
+
+/* 画笔设置区样式 */
+.brush-settings {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.brush-settings h3 {
+    margin-bottom: 15px;
+}
+
+.brush-thickness {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.brush-thickness input[type="range"] {
+    width: 200px;
+}
+
+.brush-thickness span {
+    width: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.brush-speed {
+    margin-top: 10px;
+}
+
+.brush-speed label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* TXT导出选项样式 */
+.txt-export-options {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
