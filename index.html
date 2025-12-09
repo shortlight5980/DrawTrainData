@@ -52,25 +52,37 @@
         </header>
         
         <main>
-            <!-- 尺寸选择区 -->
-            <section class="size-selection">
-                <label for="sizeSelect">选择尺寸：</label>
-                <select id="sizeSelect">
-                    <option value="16x16">16×16</option>
-                    <option value="32x32" selected>32×32</option>
-                    <option value="64x64">64×64</option>
-                    <option value="128x128">128×128</option>
-                    <option value="custom">自定义</option>
-                </select>
-                
-                <div id="customSize" style="display: none;">
-                    <label for="widthInput">宽度：</label>
-                    <input type="number" id="widthInput" min="1" value="16">
-                    <label for="heightInput">高度：</label>
-                    <input type="number" id="heightInput" min="1" value="16">
-                    <button id="applySizeBtn">应用</button>
-                </div>
-            </section>
+            <div class="settings">
+                <!-- 尺寸选择区 -->
+                <section class="size-selection">
+                    <label for="sizeSelect">选择尺寸：</label>
+                    <select id="sizeSelect">
+                        <option value="16x16">16×16</option>
+                        <option value="32x32" selected>32×32</option>
+                        <option value="64x64">64×64</option>
+                        <option value="128x128">128×128</option>
+                        <option value="custom">自定义</option>
+                    </select>
+
+                    <div id="customSize" style="display: none;">
+                        <label for="widthInput">宽度：</label>
+                        <input type="number" id="widthInput" min="1" value="16">
+                        <label for="heightInput">高度：</label>
+                        <input type="number" id="heightInput" min="1" value="16">
+                        <button id="applySizeBtn">应用</button>
+                    </div>
+                </section>
+
+                <!-- 画笔设置区 -->
+                <section class="brush-settings">
+                    <div class="brush-thickness">
+                        <label for="brushSize">画笔粗细：</label>
+                        <input type="range" id="brushSize" min="1" max="10" value="1">
+                        <span id="brushSizeValue">1</span>
+                    </div>
+                </section>
+            </div>
+
             
             <!-- 画板区 -->
             <section class="canvas-area">
@@ -82,17 +94,6 @@
                 <button id="saveBtn">保存到图片夹</button>
                 <button id="resetBtn">重置画板</button>
                 <button id="clearGalleryBtn">重置图片夹</button>
-            </section>
-            
-            <!-- 画笔设置区 -->
-            <section class="brush-settings">
-                <h3>画笔设置</h3>
-                <div class="brush-thickness">
-                    <label for="brushSize">画笔粗细：</label>
-                    <input type="range" id="brushSize" min="1" max="10" value="1">
-                    <span id="brushSizeValue">1</span>
-                </div>
-
             </section>
             
             <!-- 图片夹区 -->
@@ -122,6 +123,13 @@
                 </div>
                 <button id="exportBtn">导出数据集</button>
             </section>
+            <div class="notice">
+                <h1>
+                    <mark>注意:</mark>
+                </h1>
+                <p>下载的数据集微软会报不安全不让打开（我只是个无辜的bmp or txt文件...）</p>
+                <p>可以使用解压软件，例如7zip解压缩，这样就可以打开了</p>
+            </div>
         </main>
     </div>
     

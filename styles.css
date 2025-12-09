@@ -29,15 +29,18 @@ main {
     gap: 20px;
 }
 
+.settings{
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 /* 尺寸选择区样式 */
 .size-selection {
     display: flex;
     align-items: center;
     gap: 15px;
-    background-color: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .size-selection label {
@@ -130,7 +133,7 @@ main {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    max-height: 200px;
+    max-height: 400px;
     overflow-y: auto;
 }
 
@@ -187,11 +190,7 @@ main {
 
 /* 画笔设置区样式 */
 .brush-settings {
-    background-color: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 .brush-settings h3 {
@@ -234,4 +233,18 @@ main {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.notice{
+    background-color: white;
+    padding: 15px;
+    padding-bottom: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.notice h1,p{
+    margin-left: 20px;
 }
